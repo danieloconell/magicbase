@@ -111,12 +111,11 @@ class Robot(magicbot.MagicRobot):
         # to the chassis component. we rescale them using the rescale_js function,
         # in order to make their response exponential, and to set a dead zone -
         # which just means if it is under a certain value a 0 will be sent
-        # TODO: Tune these constants for whatever robot they are on
-        throttle = (self.joystick.getThrottle() - 1.0) / -2.0
-        x = rescale_js(self.joystick.getY(), deadzone=0.05, exponential=1.2, rate=4)
-        y = rescale_js(self.joystick.getX(), deadzone=0.05, exponential=1.2, rate=4)
-        z = rescale_js(self.joystick.getZ(), deadzone=0.2, exponential=15.0, rate=self.spin_rate)
-        self.chassis.set_inputs(-x, y, -z)
+        # TODO: Tune these constants forvwhatever robot they are on
+        vx = -rescale_js(self.joystick.getY(), deadzone=0.05, exponential=1.2, rate=4)
+        vy = -rescale_js(self.joystick.getX(), deadzone=0.05, exponential=1.2, rate=4)
+        vz = -rescale_js(self.joystick.getZ(), deadzone=0.2, exponential=15.0, rate=self.spin_rate)
+        self.chassis.set_inputs(vx, vy, vz)
         # x = throttle*-rescale_js(self.joystick.getY(), deadzone=0.05, exponential=1.2, rate=4)
         # y = throttle*-rescale_js(self.joystick.getX(), deadzone=0.05, exponential=1.2, rate=4)
         # z = throttle*-rescale_js(self.joystick.getZ(), deadzone=0.2, exponential=15.0, rate=self.spin_rate)
